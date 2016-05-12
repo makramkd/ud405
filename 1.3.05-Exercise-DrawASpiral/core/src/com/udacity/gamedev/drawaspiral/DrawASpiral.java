@@ -19,6 +19,7 @@ import com.badlogic.gdx.math.Vector2;
  */
 
 public class DrawASpiral extends ApplicationAdapter {
+    public static final String TAG = DrawASpiral.class.getSimpleName();
 
     // How many rectangles/coils to draw
     private static final int COILS = 20;
@@ -60,11 +61,14 @@ public class DrawASpiral extends ApplicationAdapter {
 
             // TODO: Make this coil stop before connecting back to itself
             Vector2 point5 = new Vector2(xOffset, yOffset);
+            Vector2 point6 = new Vector2(xOffset, yStep * (i + 1));
+            Vector2 point7 = new Vector2(xStep * (i + 1), yStep * (i + 1));
 
             shapeRenderer.line(point1, point2);
             shapeRenderer.line(point2, point3);
             shapeRenderer.line(point3, point4);
-            shapeRenderer.line(point4, point5);
+            shapeRenderer.line(point4, point6);
+            shapeRenderer.line(point6, point7);
         }
         shapeRenderer.end();
     }
