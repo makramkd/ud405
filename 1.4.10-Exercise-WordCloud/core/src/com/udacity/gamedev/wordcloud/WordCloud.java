@@ -72,13 +72,14 @@ public class WordCloud extends ApplicationAdapter {
         for (Word word : words) {
 
             // TODO: Set the font's scale using font.getData().setScale()
-
+            font.getData().setScale(word.scale);
 
             // TODO: Set the font's tint using font.setColor()
-
+            font.setColor(word.color);
 
             // TODO: Actually draw the word using font.draw()
-
+            font.draw(batch, word.letters, word.x * Gdx.graphics.getWidth(),
+                    word.y * Gdx.graphics.getHeight());
         }
         batch.end();
     }
@@ -94,7 +95,13 @@ public class WordCloud extends ApplicationAdapter {
     static class Word {
 
         private static final String[] WORDS =
-                {"render-farm", "refrigerator", "tiger-team", "weathered", "camera", "tattoo", "boat", "soul-delay", "nodal point", "motion augmented", "reality neon", "nano-construct", "garage", "bicycle", "rebar tanto", "modem", "concrete RAF", "industrial grade media", "realism", "drone", "post-franchise shoes", "render-farm-ware", "DIY San Francisco", "rain lights", "numinous tank-traps", "pen drone", "cyber-cardboard", "denim monofilament", "order-flow", "smart-hotdog"};
+                {"render-farm", "refrigerator", "tiger-team", "weathered", "camera",
+                        "tattoo", "boat", "soul-delay", "nodal point", "motion augmented",
+                        "reality neon", "nano-construct", "garage", "bicycle", "rebar tanto",
+                        "modem", "concrete RAF", "industrial grade media", "realism", "drone",
+                        "post-franchise shoes", "render-farm-ware", "DIY San Francisco",
+                        "rain lights", "numinous tank-traps", "pen drone", "cyber-cardboard",
+                        "denim monofilament", "order-flow", "smart-hotdog"};
         float x;
         float y;
         float scale;

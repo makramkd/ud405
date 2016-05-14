@@ -23,7 +23,7 @@ public class BouncingBall {
 
     private static final Color COLOR = Color.RED;
     private static final float RADIUS_FACTOR = 1.0f / 20;
-    private static final float KICK_VELOCITY = 500.0f;
+    private static final float KICK_VELOCITY = 10.0f;
 
     float radius;
     Vector2 position;
@@ -50,7 +50,8 @@ public class BouncingBall {
     public void update(float delta, Viewport viewport) {
 
         // TODO: Update the ball's position using its velocity
-
+        position.x += velocity.x;
+        position.y += velocity.y;
 
         collideWithWalls(radius, viewport.getWorldWidth(), viewport.getWorldHeight());
     }
@@ -66,10 +67,16 @@ public class BouncingBall {
         }
 
         // TODO: Make the ball bounce off the bottom of the screen
-
+        if (position.y - radius < 0) {
+            position.y = radius;
+            velocity.y = -velocity.y;
+        }
 
         // TODO: Make the ball bounce off the top of the screen
-
+        if (position.y + radius > viewportHeight) {
+            position.y = viewportHeight - radius;
+            velocity.y = -velocity.y;
+        }
     }
 
     public void render(ShapeRenderer renderer) {

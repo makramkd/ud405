@@ -2,15 +2,19 @@ package com.udacity.gamedev.drawthecantorgasket;
 
 import com.badlogic.gdx.ApplicationAdapter;
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.math.Rectangle;
+import com.badlogic.gdx.math.Vector2;
 
 /*
 
 TODO: Start here
 
-The Cantor gasket is a fractal where we start with a white square. We divide that square up into a 3x3 grid of smaller squares, then remove the middle square. Finally, we repeat the process on each of the remaining 8 squares.
+The Cantor gasket is a fractal where we start with a white square.
+We divide that square up into a 3x3 grid of smaller squares, then remove the middle square.
+Finally, we repeat the process on each of the remaining 8 squares.
 
  */
 
@@ -18,10 +22,17 @@ public class DrawTheCantorGasket extends ApplicationAdapter {
 
     ShapeRenderer shapeRenderer;
     // TODO: Set a constant for how many recursions to draw. 5 is a good place to start
+    public static final int REC = 5;
 
     @Override
     public void create () {
         shapeRenderer = new ShapeRenderer();
+    }
+
+    @Override
+    public void dispose() {
+        super.dispose();
+        shapeRenderer.dispose();
     }
 
     @Override
@@ -34,11 +45,13 @@ public class DrawTheCantorGasket extends ApplicationAdapter {
         Rectangle bounds = findLargestSquare();
 
         // TODO: Begin a filled shapeRenderer batch
-
+        shapeRenderer.begin(ShapeRenderer.ShapeType.Filled);
         // TODO: Draw a white square matching the bounds
-
+        shapeRenderer.setColor(Color.WHITE);
+        shapeRenderer.rect(bounds.x, bounds.y, bounds.width, bounds.height);
         // TODO: Set the working color to black, and call punchCantorGasket with the bounds
-
+        shapeRenderer.setColor(Color.BLACK);
+        punchCantorGasket(bounds.x, bounds.y, bounds.width, REC);
         // TODO: End the batch
         shapeRenderer.end();
     }
@@ -52,11 +65,22 @@ public class DrawTheCantorGasket extends ApplicationAdapter {
     private void punchCantorGasket(float x, float y, float size, int recursions){
         // Note that size means the height and width of the square
         // TODO: Base case, if recursions = 0, return
-
+        if (recursions == 0) {
+            return;
+        }
         // TODO: Draw a black square in the middle square
-
+        float xpos = x + size / 3;
+        float ypos = y + size / 3;
+        shapeRenderer.rect(xpos, ypos, size/3, size/3);
         // TODO: Call punchCantorGasket on all 8 other squares
-
+        punchCantorGasket(x, y, size/3, recursions - 1);
+        punchCantorGasket(x, y + size/3, size/3, recursions - 1);
+        punchCantorGasket(x, y + 2 * size / 3, size/3, recursions - 1);
+        punchCantorGasket(x + size/3, y + 2 * size / 3, size/3, recursions - 1);
+        punchCantorGasket(x + 2 * size/3, y + 2 * size / 3, size/3, recursions - 1);
+        punchCantorGasket(x + 2 * size / 3, y + size / 3, size / 3, recursions - 1);
+        punchCantorGasket(x + 2 * size / 3, y, size / 3, recursions - 1);
+        punchCantorGasket(x + size / 3, y, size / 3, recursions - 1);
     }
 
     private Rectangle findLargestSquare(){
